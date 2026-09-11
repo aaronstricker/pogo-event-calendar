@@ -1,0 +1,17 @@
+name: Pokémon GO Discord daily digest
+on:
+  schedule:
+    - cron: "5 13 * * *"  # 9:05 AM EDT / 8:05 AM EST in Pennsylvania
+  workflow_dispatch:
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Post calendar digest
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python scripts/discord_digest.py
